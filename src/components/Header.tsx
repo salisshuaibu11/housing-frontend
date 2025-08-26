@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X } from 'lucide-react';
@@ -20,8 +21,12 @@ export const Header = () => {
       {/* Announcement Banner */}
       <div className="bg-[hsl(var(--government-green))] text-white py-2 px-4 text-center text-sm font-medium">
         Get NHF mortgage at <strong>6%</strong> and FMBN Non-interest Rent-to-Own. Secure a unit today in Karsana, FCT Abuja by making a minimum downpayment of 20%. Unit allocation is on a first come, first serve basis.{' '}
-        <Button variant="link" className="text-white underline p-0 h-auto font-medium">
-          Click here to apply
+        <Button 
+          variant="link" 
+          className="text-white underline p-0 h-auto font-medium"
+          asChild
+        >
+          <Link to="/sign-up">Click here to apply</Link>
         </Button>
       </div>
 
@@ -29,22 +34,22 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="text-2xl font-bold text-[hsl(var(--government-green))]">
+            <Link to="/" className="text-2xl font-bold text-[hsl(var(--government-green))]">
               Hope <span className="text-foreground">Homes</span>
-            </div>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           {!isMobile && (
             <nav className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
           )}
@@ -98,13 +103,14 @@ export const Header = () => {
             </div>
             <nav className="space-y-2">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.href}
                   className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
             <div className="flex flex-col space-y-2 pt-4 border-t border-border">

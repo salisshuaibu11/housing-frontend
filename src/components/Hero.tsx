@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search } from 'lucide-react';
@@ -82,18 +83,30 @@ export const Hero = () => {
                 variant="hero"
                 size="lg"
                 className="w-full md:w-auto px-8"
+                asChild
               >
-                <Search className="w-5 h-5 mr-2" />
-                Search Properties
+                <Link to="/properties">
+                  <Search className="w-5 h-5 mr-2" />
+                  Search Properties
+                </Link>
               </Button>
             </div>
           </div>
 
-          {/* Video CTA */}
-          <div className="text-center">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Button 
+              size="lg" 
+              className="bg-[hsl(var(--government-green))] hover:bg-[hsl(var(--government-green))]/90 text-white px-8 py-3"
+              asChild
+            >
+              <Link to="/sign-up">Get Started - Apply Now</Link>
+            </Button>
+            
             <Button 
               variant="government-outline" 
-              className="border-white text-white hover:bg-white hover:text-[hsl(var(--government-green))]"
+              size="lg"
+              className="border-white text-white hover:bg-white hover:text-[hsl(var(--government-green))] px-8 py-3"
             >
               Watch a short video on How to Secure Your Home in 3 Simple Steps
             </Button>
