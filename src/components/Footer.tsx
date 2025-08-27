@@ -1,11 +1,12 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 export const Footer = () => {
   const footerLinks = [
-    { label: 'How It Works', href: '/how-it-works' },
     { label: 'Properties', href: '/properties' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'FAQs', href: '/faqs' },
+    { label: 'Calculator', href: '/calculator' },
+    { label: 'Apply Now', href: '/sign-up' },
+    { label: 'Application Form', href: '/application-form' },
   ];
 
   return (
@@ -15,11 +16,11 @@ export const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-4">
             <div className="text-2xl font-bold">
-              Hope Homes
+              Teachers Housing
             </div>
             <p className="text-white/80 max-w-md">
-              Making the dream of home ownership a reality for every Nigerian through 
-              innovative financing solutions and affordable housing programs.
+              Making the dream of home ownership a reality for educators through 
+              the Affordable Housing Scheme for Teachers and innovative financing solutions.
             </p>
           </div>
 
@@ -28,13 +29,13 @@ export const Footer = () => {
             <h3 className="font-semibold text-lg">Quick Links</h3>
             <nav className="space-y-2">
               {footerLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   className="block text-white/80 hover:text-white transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

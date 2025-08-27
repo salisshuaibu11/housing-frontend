@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calculator as CalculatorIcon } from 'lucide-react';
@@ -56,8 +57,9 @@ export const Calculator = () => {
                 variant="government" 
                 size="lg"
                 className="w-full sm:w-auto px-8"
+                asChild
               >
-                Check Now
+                <Link to="/calculator">Check Now</Link>
               </Button>
             </div>
 

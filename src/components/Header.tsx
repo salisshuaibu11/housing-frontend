@@ -34,8 +34,8 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <Link to="/" className="text-2xl font-bold text-[hsl(var(--government-green))]">
-              Hope <span className="text-foreground">Homes</span>
+            <Link to="/" className="text-xl md:text-2xl font-bold text-[hsl(var(--government-green))]">
+              Teachers <span className="text-foreground">Housing</span>
             </Link>
           </div>
 
@@ -72,8 +72,8 @@ export const Header = () => {
                 <Button variant="ghost" size="sm">
                   Log In
                 </Button>
-                <Button variant="government" size="sm">
-                  Sign Up
+                <Button variant="government" size="sm" asChild>
+                  <Link to="/sign-up">Sign Up</Link>
                 </Button>
               </>
             )}
@@ -117,8 +117,8 @@ export const Header = () => {
               <Button variant="ghost" size="sm" className="justify-start">
                 Log In
               </Button>
-              <Button variant="government" size="sm">
-                Sign Up
+              <Button variant="government" size="sm" asChild>
+                <Link to="/sign-up">Sign Up</Link>
               </Button>
             </div>
           </div>

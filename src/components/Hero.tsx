@@ -48,18 +48,18 @@ export const Hero = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Renewed Hope Housing
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+            Affordable Housing Scheme
             <br />
-            <span className="text-[hsl(var(--government-green-light))]">Delivery Portal</span>
+            <span className="text-[hsl(var(--government-green-light))]">for Teachers</span>
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Welcome to Renewed Hope Housing Delivery Portal! Through our innovative home ownership through NHF Loans at{' '}
+            Welcome to the Affordable Housing Scheme for Teachers! Through our innovative home ownership solutions with NHF Loans at{' '}
             <strong className="text-[hsl(var(--government-green-light))]">6% interest rate</strong>{' '}
-            and FMBN Non-Interest Rent-to-Own Scheme, we aim to make the dream of owning a home a reality for you. 
-            Join us in our journey towards a future where every Nigerian has a place to call home.
+            and FMBN Non-Interest Rent-to-Own Scheme, we aim to make home ownership accessible for educators. 
+            Join us in supporting those who shape our future.
           </p>
 
           {/* Property Search */}

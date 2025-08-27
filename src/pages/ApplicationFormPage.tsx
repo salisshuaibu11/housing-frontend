@@ -110,9 +110,9 @@ const ApplicationFormPage = () => {
         <div className="max-w-4xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle>Comprehensive Application Form</CardTitle>
+              <CardTitle>Teacher Housing Application</CardTitle>
               <CardDescription>
-                Complete this detailed form to proceed with your housing application through the National Housing Fund
+                Complete this detailed form to proceed with your application for the Affordable Housing Scheme for Teachers
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -254,10 +254,11 @@ const ApplicationFormPage = () => {
                           <SelectValue placeholder="Select Employment Status" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="employed">Employed</SelectItem>
-                          <SelectItem value="self-employed">Self Employed</SelectItem>
-                          <SelectItem value="business-owner">Business Owner</SelectItem>
-                          <SelectItem value="retired">Retired</SelectItem>
+                          <SelectItem value="teacher-public">Public School Teacher</SelectItem>
+                          <SelectItem value="teacher-private">Private School Teacher</SelectItem>
+                          <SelectItem value="teacher-university">University Lecturer</SelectItem>
+                          <SelectItem value="teacher-retired">Retired Teacher</SelectItem>
+                          <SelectItem value="education-admin">Education Administrator</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -321,7 +322,7 @@ const ApplicationFormPage = () => {
                   <div className="flex items-center space-x-2">
                     <Checkbox id="terms" />
                     <Label htmlFor="terms" className="text-sm">
-                      I agree to the terms and conditions of the National Housing Fund program and authorize verification of the information provided above.
+                      I agree to the terms and conditions of the Affordable Housing Scheme for Teachers and authorize verification of the information provided above.
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">
