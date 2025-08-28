@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -34,12 +34,55 @@ interface FormData {
   location: string;
 }
 
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  state_of_origin: string;
+  property_type: string;
+  location: string;
+}
+
+interface AuthState {
+  isAuthenticated: boolean;
+  user: User | null;
+  sessionToken: string | null;
+}
+
 const SignUpPage = () => {
   const { register, handleSubmit, watch, setValue } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [authState, setAuthState] = useState<AuthState>({
+    isAuthenticated: false,
+    user: null,
+    sessionToken: null
+  });
   const selectedState = watch('state');
+
+  // Check for existing session on component mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem('teacherData');
+    const sessionToken = sessionStorage.getItem('teacherSession');
+
+    if (savedUser && sessionToken) {
+      try {
+        const user = JSON.parse(savedUser);
+        setAuthState({
+          isAuthenticated: true,
+          user,
+          sessionToken
+        });
+      } catch (error) {
+        console.error('Error parsing saved user data:', error);
+        // Clear corrupted data
+        localStorage.removeItem('teacherUser');
+        sessionStorage.removeItem('teacherSession');
+      }
+    }
+  }, []);
   
   const getLocationsForState = (state: string) => {
     if (state === 'FCT') return abujaLocations;
@@ -47,13 +90,88 @@ const SignUpPage = () => {
     return ['Location will be available soon'];
   };
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form submitted:', data);
-    setIsSubmitted(true);
-    toast({
-      title: "Application Submitted Successfully!",
-      description: "Thank you for your interest. We'll contact you when your preferred location becomes available.",
+  const generateSessionToken = () => {
+    return Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+  };
+
+  const saveUserData = (userData: User, sessionToken: string) => {
+    // Save to localStorage for persistence
+    localStorage.setItem('teacherUser', JSON.stringify(userData));
+
+    // Save session token to sessionStorage
+    sessionStorage.setItem('teacherSession', sessionToken);
+
+    // Update auth state
+    setAuthState({
+      isAuthenticated: true,
+      user: userData,
+      sessionToken
     });
+  };
+
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+
+    try {
+      // Prepare data for API
+      const registrationData = {
+        ...data,
+        phone: data.phone
+      };
+
+      // Call the registration API
+      const response = await fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Registration failed');
+      }
+
+      const result = await response.json();
+
+      // Create user object with API response data
+      // const userData: User = {
+      //   firstName: data.firstName,
+      //   lastName: data.lastName,
+      //   email: data.email,
+      //   phone: data.phone,
+      //   state: data.state,
+      //   propertyType: data.propertyType,
+      //   location: data.location,
+      //   createdAt: new Date().toISOString()
+      // };
+      //
+      // // Generate session token
+      // const sessionToken = generateSessionToken();
+      //
+      // // Save user data and session
+      // saveUserData(result, sessionToken);
+
+      console.log('Registration successful:', result);
+      setIsSubmitted(false);
+
+      toast({
+        title: "Registration Successful!",
+        description: "Your account has been created and you are now logged in.",
+      });
+
+    } catch (error) {
+      console.error('Registration error:', error);
+
+      toast({
+        title: "Registration Failed",
+        description: error instanceof Error ? error.message : "An error occurred during registration. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
