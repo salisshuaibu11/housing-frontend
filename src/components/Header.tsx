@@ -70,7 +70,7 @@ export const Header = () => {
             {!isMobile && (
               <>
                 <Button variant="ghost" size="sm">
-                  Log In
+                  <Link to="/login">Log In</Link>
                 </Button>
                 <Button variant="government" size="sm" asChild>
                   <Link to="/sign-up">Sign Up</Link>
@@ -115,7 +115,7 @@ export const Header = () => {
             </nav>
             <div className="flex flex-col space-y-2 pt-4 border-t border-border">
               <Button variant="ghost" size="sm" className="justify-start">
-                Log In
+                <Link to="/login">Log In</Link>
               </Button>
               <Button variant="government" size="sm" asChild>
                 <Link to="/sign-up">Sign Up</Link>

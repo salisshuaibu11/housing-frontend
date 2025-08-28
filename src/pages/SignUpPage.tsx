@@ -8,15 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
+import {useAuth} from "@/hooks/useAuth.js.ts";
+import {Link} from "react-router-dom";
 
 const nigerianStates = [
-  'Abia State', 'Adamawa State', 'Akwa Ibom State', 'Anambra State', 'Bauchi State', 
-  'Bayelsa State', 'Benue State', 'Borno State', 'Cross River State', 'Delta State',
-  'Ebonyi State', 'Edo State', 'Ekiti State', 'Enugu State', 'FCT', 'Gombe State',
-  'Imo State', 'Jigawa State', 'Kaduna State', 'Kano State', 'Katsina State',
-  'Kebbi State', 'Kogi State', 'Kwara State', 'Lagos State', 'Nasarawa State',
-  'Niger State', 'Ogun State', 'Ondo State', 'Osun State', 'Oyo State',
-  'Plateau State', 'Rivers State', 'Sokoto State', 'Taraba State', 'Yobe State', 'Zamfara State'
+  'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi',
+  'Bayelsa', 'Benue State', 'Borno', 'Cross River', 'Delta',
+  'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe',
+  'Imo', 'Jigawa', 'Kaduna', 'Kano State', 'Katsina',
+  'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa',
+  'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo State',
+  'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
 ];
 
 const propertyTypes = ['2 Bedroom', '3 Bedroom', '4 Bedroom'];
@@ -25,13 +27,13 @@ const abujaLocations = ['Life Camp', 'Karsana', 'Gwarinpa', 'Wuye', 'Maitama'];
 const lagosLocations = ['Victoria Island', 'Ikoyi', 'Lekki', 'Ajah', 'Ikeja'];
 
 interface FormData {
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
   phone: string;
-  state: string;
-  propertyType: string;
-  location: string;
+  state_of_origin: string;
+  property_type: string;
+  password: string;
 }
 
 interface User {
@@ -53,124 +55,34 @@ interface AuthState {
 const SignUpPage = () => {
   const { register, handleSubmit, watch, setValue } = useForm<FormData>();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const {
+    isAuthenticated,
+    user,
+    isLoading,
+    error,
+    register: registerTeacher,
+    logout,
+    updateProfile,
+    hasSubmittedForm
+  } = useAuth();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const [authState, setAuthState] = useState<AuthState>({
-    isAuthenticated: false,
-    user: null,
-    sessionToken: null
-  });
-  const selectedState = watch('state');
 
-  // Check for existing session on component mount
-  useEffect(() => {
-    const savedUser = localStorage.getItem('teacherData');
-    const sessionToken = sessionStorage.getItem('teacherSession');
-
-    if (savedUser && sessionToken) {
-      try {
-        const user = JSON.parse(savedUser);
-        setAuthState({
-          isAuthenticated: true,
-          user,
-          sessionToken
-        });
-      } catch (error) {
-        console.error('Error parsing saved user data:', error);
-        // Clear corrupted data
-        localStorage.removeItem('teacherUser');
-        sessionStorage.removeItem('teacherSession');
-      }
-    }
-  }, []);
-  
-  const getLocationsForState = (state: string) => {
-    if (state === 'FCT') return abujaLocations;
-    if (state === 'Lagos State') return lagosLocations;
-    return ['Location will be available soon'];
-  };
-
-  const generateSessionToken = () => {
-    return Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
-  };
-
-  const saveUserData = (userData: User, sessionToken: string) => {
-    // Save to localStorage for persistence
-    localStorage.setItem('teacherUser', JSON.stringify(userData));
-
-    // Save session token to sessionStorage
-    sessionStorage.setItem('teacherSession', sessionToken);
-
-    // Update auth state
-    setAuthState({
-      isAuthenticated: true,
-      user: userData,
-      sessionToken
-    });
-  };
 
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true);
-
     try {
-      // Prepare data for API
-      const registrationData = {
-        ...data,
-        phone: data.phone
-      };
-
-      // Call the registration API
-      const response = await fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(registrationData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
-
-      const result = await response.json();
-
-      // Create user object with API response data
-      // const userData: User = {
-      //   firstName: data.firstName,
-      //   lastName: data.lastName,
-      //   email: data.email,
-      //   phone: data.phone,
-      //   state: data.state,
-      //   propertyType: data.propertyType,
-      //   location: data.location,
-      //   createdAt: new Date().toISOString()
-      // };
-      //
-      // // Generate session token
-      // const sessionToken = generateSessionToken();
-      //
-      // // Save user data and session
-      // saveUserData(result, sessionToken);
-
-      console.log('Registration successful:', result);
-      setIsSubmitted(false);
+      await registerTeacher(data);
+      setIsSubmitted(true);
 
       toast({
         title: "Registration Successful!",
         description: "Your account has been created and you are now logged in.",
       });
-
     } catch (error) {
-      console.error('Registration error:', error);
-
       toast({
         title: "Registration Failed",
         description: error instanceof Error ? error.message : "An error occurred during registration. Please try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -183,19 +95,115 @@ const SignUpPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="text-[hsl(var(--government-green))]">Success!</CardTitle>
-                <CardDescription>Your application has been submitted successfully.</CardDescription>
+                <CardDescription>Registration is successful.</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Thank you for registering your interest. We'll contact you when properties in your preferred location become available.
+                  Thank you for registering. Click the button downn below to submit application .
                 </p>
                 <Button 
                   onClick={() => setIsSubmitted(false)}
                   variant="government"
                   className="w-full"
                 >
-                  Submit Another Application
+                  <Link to="/application-form">Submit Application</Link>
                 </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // If user is already authenticated, show success page
+  if (isAuthenticated && isSubmitted) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-12">
+          <div className="max-w-md mx-auto text-center">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-[hsl(var(--government-green))]">Welcome Back!</CardTitle>
+                <CardDescription>
+                  Hello {user?.firstname}, your registration is active.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-left space-y-2 mb-4">
+                  <p><strong>Name:</strong> {user?.firstname} {user?.lastname}</p>
+                  <p><strong>Email:</strong> {user?.email}</p>
+                  <p><strong>Phone:</strong> {user?.phone}</p>
+                  <p><strong>State:</strong> {user?.state}</p>
+                  <p><strong>Property Type:</strong> {user?.property_type}</p>
+                </div>
+                <div className="space-y-2">
+                  <Button
+                    onClick={() => setIsSubmitted(false)}
+                    variant="government"
+                    className="w-full"
+                  >
+                    Update Registration
+                  </Button>
+                  <Button
+                    onClick={logout}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // If user is authenticated but hasn't submitted new form, show their existing data
+  if (isAuthenticated && !isSubmitted) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto px-4 py-12">
+          <div className="max-w-2xl mx-auto">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Welcome Back, {user?.firstname}!</CardTitle>
+                    <CardDescription>
+                      You are already registered. You can update your information or logout.
+                    </CardDescription>
+                  </div>
+                  <Button onClick={logout} variant="outline">
+                    Logout
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="bg-muted p-4 rounded-lg">
+                    <h3 className="font-semibold mb-2">Your Current Registration:</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                      <p><strong>Name:</strong> {user?.firstname} {user?.lastname}</p>
+                      <p><strong>Email:</strong> {user?.email}</p>
+                      <p><strong>Phone:</strong> {user?.phone}</p>
+                      <p><strong>State:</strong> {user?.state_of_origin}</p>
+                      <p><strong>Property Type:</strong> {user?.property_type}</p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="government"
+                    className="w-full"
+                  >
+                    <Link to="/register">Submit Application</Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -224,7 +232,7 @@ const SignUpPage = () => {
                     <Label htmlFor="firstName">First Name</Label>
                     <Input
                       id="firstName"
-                      {...register('firstName', { required: true })}
+                      {...register('firstname', {required: true})}
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -232,7 +240,7 @@ const SignUpPage = () => {
                     <Label htmlFor="lastName">Last Name</Label>
                     <Input
                       id="lastName"
-                      {...register('lastName', { required: true })}
+                      {...register('lastname', {required: true})}
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -243,20 +251,30 @@ const SignUpPage = () => {
                   <Input
                     id="email"
                     type="email"
-                    {...register('email', { required: true })}
+                    {...register('email', {required: true})}
                     placeholder="Enter your email address"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    {...register('password', {required: true})}
+                    placeholder="Enter your password"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
                   <div className="flex">
-                    <span className="inline-flex items-center px-3 border border-r-0 border-input bg-muted text-muted-foreground text-sm rounded-l-md">
+                    <span
+                      className="inline-flex items-center px-3 border border-r-0 border-input bg-muted text-muted-foreground text-sm rounded-l-md">
                       +234
                     </span>
                     <Input
                       id="phone"
-                      {...register('phone', { required: true })}
+                      {...register('phone', {required: true})}
                       placeholder="Enter your phone number"
                       className="rounded-l-none"
                     />
@@ -265,9 +283,9 @@ const SignUpPage = () => {
 
                 <div className="space-y-2">
                   <Label>State</Label>
-                  <Select onValueChange={(value) => setValue('state', value)}>
+                  <Select onValueChange={(value) => setValue('state_of_origin', value)}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your state" />
+                      <SelectValue placeholder="Select your state"/>
                     </SelectTrigger>
                     <SelectContent>
                       {nigerianStates.map((state) => (
@@ -281,9 +299,9 @@ const SignUpPage = () => {
 
                 <div className="space-y-2">
                   <Label>Property Type of Interest</Label>
-                  <Select onValueChange={(value) => setValue('propertyType', value)}>
+                  <Select onValueChange={(value) => setValue('property_type', value)}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select property type" />
+                      <SelectValue placeholder="Select property type"/>
                     </SelectTrigger>
                     <SelectContent>
                       {propertyTypes.map((type) => (
@@ -295,33 +313,39 @@ const SignUpPage = () => {
                   </Select>
                 </div>
 
-                {selectedState && (
-                  <div className="space-y-2">
-                    <Label>Preferred Location in {selectedState}</Label>
-                    <Select onValueChange={(value) => setValue('location', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select preferred location" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {getLocationsForState(selectedState).map((location) => (
-                          <SelectItem key={location} value={location}>
-                            {location}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
+                {/*{selectedState && (*/}
+                {/*  <div className="space-y-2">*/}
+                {/*    <Label>Preferred Location in {selectedState}</Label>*/}
+                {/*    <Select onValueChange={(value) => setValue('location', value)}>*/}
+                {/*      <SelectTrigger>*/}
+                {/*        <SelectValue placeholder="Select preferred location" />*/}
+                {/*      </SelectTrigger>*/}
+                {/*      <SelectContent>*/}
+                {/*        {getLocationsForState(selectedState).map((location) => (*/}
+                {/*          <SelectItem key={location} value={location}>*/}
+                {/*            {location}*/}
+                {/*          </SelectItem>*/}
+                {/*        ))}*/}
+                {/*      </SelectContent>*/}
+                {/*    </Select>*/}
+                {/*  </div>*/}
+                {/*)}*/}
 
-                <Button type="submit" className="w-full" variant="government">
-                  Submit Application
+                <Button
+                  type="submit"
+                  className="w-full"
+                  variant="government"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Submitting...' : 'Submit Application'}
                 </Button>
               </form>
             </CardContent>
           </Card>
         </div>
       </main>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
