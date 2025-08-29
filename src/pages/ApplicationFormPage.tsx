@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
+// import { Header } from '@/components/Header';
+// import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,52 +13,51 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import {CheckCircle, Info} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useForm } from 'react-hook-form';
+import {useAuth} from "@/hooks/useAuth.js.ts";
 
 const nigerianStates = [
-  'Abia State', 'Adamawa State', 'Akwa Ibom State', 'Anambra State', 'Bauchi State', 
-  'Bayelsa State', 'Benue State', 'Borno State', 'Cross River State', 'Delta State',
-  'Ebonyi State', 'Edo State', 'Ekiti State', 'Enugu State', 'FCT', 'Gombe State',
-  'Imo State', 'Jigawa State', 'Kaduna State', 'Kano State', 'Katsina State',
-  'Kebbi State', 'Kogi State', 'Kwara State', 'Lagos State', 'Nasarawa State',
-  'Niger State', 'Ogun State', 'Ondo State', 'Osun State', 'Oyo State',
-  'Plateau State', 'Rivers State', 'Sokoto State', 'Taraba State', 'Yobe State', 'Zamfara State'
+  'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi',
+  'Bayelsa', 'Benue', 'Borno', 'Cross River', 'Delta',
+  'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe',
+  'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina',
+  'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa',
+  'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
+  'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
 ];
 
 interface FormData {
   // Location preferences
-  state: string;
-  projectLocation: string;
-  projectSite: string;
-  propertyType: string;
+  project_state: string;
+  property_type: string;
   
   // Payment
-  paymentMode: string;
+  payment_mode: string;
   
   // Personal Info
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  dateOfBirth: string;
+  date_of_birth: string;
   phone: string;
-  stateOfOrigin: string;
+  state_of_origin: string;
   
   // Financial Info
   bvn: string;
   nin: string;
-  monthlyIncome: string;
-  employmentStatus: string;
-  employerName: string;
-  employerAddress: string;
+  monthly_income: string;
+  employment_status: string;
+  employer_name: string;
+  employer_address: string;
   
   // Bank Details
-  bankName: string;
-  accountNumber: string;
+  bank_name: string;
+  account_number: string;
   
   // Next of Kin
-  nextOfKinName: string;
-  nextOfKinRelation: string;
-  nextOfKinPhone: string;
-  nextOfKinAddress: string;
+  next_of_kin: string;
+  relation_with_next_of_kin: string;
+  next_of_kin_phone: string;
+  next_of_kin_address: string;
 }
 
 interface FormErrors {
@@ -126,28 +125,30 @@ const Toast = ({ toast, onClose }: { toast: Toast; onClose: () => void }) => (
 );
 
 const ApplicationFormPage = () => {
+  const { updateProfile, authState } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    state: '',
-    propertyType: '',
-    paymentMode: '',
-    firstName: '',
-    lastName: '',
+    property_state: '',
+    property_type: '',
+    payment_mode: '',
+    firstname: '',
+    lastname: '',
     email: '',
-    dateOfBirth: '',
+    date_of_birth: '',
     phone: '',
-    stateOfOrigin: '',
+    state_of_origin: '',
     bvn: '',
     nin: '',
-    monthlyIncome: '',
-    employmentStatus: '',
-    employerName: '',
-    employerAddress: '',
-    bankName: '',
-    accountNumber: '',
-    nextOfKinName: '',
-    nextOfKinRelation: '',
-    nextOfKinPhone: '',
-    nextOfKinAddress: ''
+    monthly_income: '',
+    employment_status: '',
+    employer_name: '',
+    employer_address: '',
+    bank_name: '',
+    account_number: '',
+    next_of_kin: '',
+    relationship_with_next_of_kin: '',
+    next_of_kin_phone: '',
+    next_of_kin_address: ''
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -166,27 +167,27 @@ const ApplicationFormPage = () => {
     const newErrors: FormErrors = {};
 
     // Required fields validation
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.firstname.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastname.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
-    if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
+    if (!formData.date_of_birth) newErrors.dateOfBirth = 'Date of birth is required';
     if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (!formData.state) newErrors.state = 'State is required';
-    if (!formData.stateOfOrigin) newErrors.stateOfOrigin = 'State of origin is required';
-    if (!formData.propertyType) newErrors.propertyType = 'Property type is required';
-    if (!formData.paymentMode) newErrors.paymentMode = 'Payment mode is required';
+    // if (!formData.property_state) newErrors.state = 'State is required';
+    if (!formData.state_of_origin) newErrors.stateOfOrigin = 'State of origin is required';
+    if (!formData.property_state) newErrors.propertyType = 'Property type is required';
+    if (!formData.payment_mode) newErrors.paymentMode = 'Payment mode is required';
     if (!formData.bvn.trim()) newErrors.bvn = 'BVN is required';
     if (!formData.nin.trim()) newErrors.nin = 'NIN is required';
-    if (!formData.monthlyIncome.trim()) newErrors.monthlyIncome = 'Monthly income is required';
-    if (!formData.employmentStatus) newErrors.employmentStatus = 'Employment status is required';
-    if (!formData.employerName.trim()) newErrors.employerName = 'Employer name is required';
-    if (!formData.employerAddress.trim()) newErrors.employerAddress = 'Employer address is required';
-    if (!formData.bankName.trim()) newErrors.bankName = 'Bank name is required';
-    if (!formData.accountNumber.trim()) newErrors.accountNumber = 'Account number is required';
-    if (!formData.nextOfKinName.trim()) newErrors.nextOfKinName = 'Next of kin name is required';
-    if (!formData.nextOfKinRelation.trim()) newErrors.nextOfKinRelation = 'Relationship is required';
-    if (!formData.nextOfKinPhone.trim()) newErrors.nextOfKinPhone = 'Next of kin phone is required';
-    if (!formData.nextOfKinAddress.trim()) newErrors.nextOfKinAddress = 'Next of kin address is required';
+    if (!formData.monthly_income.trim()) newErrors.monthlyIncome = 'Monthly income is required';
+    if (!formData.employment_status) newErrors.employmentStatus = 'Employment status is required';
+    if (!formData.employer_name.trim()) newErrors.employerName = 'Employer name is required';
+    if (!formData.employer_address.trim()) newErrors.employerAddress = 'Employer address is required';
+    if (!formData.bank_name.trim()) newErrors.bankName = 'Bank name is required';
+    if (!formData.account_number.trim()) newErrors.accountNumber = 'Account number is required';
+    if (!formData.next_of_kin.trim()) newErrors.nextOfKinName = 'Next of kin name is required';
+    if (!formData.relationship_with_next_of_kin.trim()) newErrors.nextOfKinRelation = 'Relationship is required';
+    if (!formData.next_of_kin_phone.trim()) newErrors.nextOfKinPhone = 'Next of kin phone is required';
+    if (!formData.next_of_kin_address.trim()) newErrors.nextOfKinAddress = 'Next of kin address is required';
 
     // Format validation
     if (formData.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
@@ -201,10 +202,10 @@ const ApplicationFormPage = () => {
     if (formData.nin && !/^\d{11}$/.test(formData.nin)) {
       newErrors.nin = 'NIN must be exactly 11 digits';
     }
-    if (formData.accountNumber && !/^\d{10}$/.test(formData.accountNumber)) {
-      newErrors.accountNumber = 'Account number must be exactly 10 digits';
+    if (formData.account_number && !/^\d{10}$/.test(formData.account_number)) {
+      newErrors.account_number = 'Account number must be exactly 10 digits';
     }
-    if (formData.monthlyIncome && parseInt(formData.monthlyIncome) < 30000) {
+    if (formData.monthly_income && parseInt(formData.monthly_income) < 30000) {
       newErrors.monthlyIncome = 'Minimum monthly income is ₦30,000';
     }
 
@@ -216,170 +217,29 @@ const ApplicationFormPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // API submission function
-  const submitToBackend = async (data: FormData): Promise<ApiResponse> => {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.housingfund.gov.ng';
-
-    // Transform form data for backend
-    const payload = {
-      personal_info: {
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        date_of_birth: data.dateOfBirth,
-        phone: data.phone,
-        state_of_origin: data.stateOfOrigin
-      },
-      identification: {
-        bvn: data.bvn,
-        nin: data.nin
-      },
-      employment: {
-        status: data.employmentStatus,
-        employer_name: data.employerName,
-        employer_address: data.employerAddress,
-        monthly_income: parseInt(data.monthlyIncome)
-      },
-      banking: {
-        bank_name: data.bankName,
-        account_number: data.accountNumber
-      },
-      preferences: {
-        state: data.state,
-        property_type: data.propertyType,
-        payment_mode: data.paymentMode
-      },
-      next_of_kin: {
-        name: data.nextOfKinName,
-        relationship: data.nextOfKinRelation,
-        phone: data.nextOfKinPhone,
-        address: data.nextOfKinAddress
-      },
-      consent: {
-        terms_accepted: termsAccepted,
-        privacy_consent: privacyConsent
-      },
-      metadata: {
-        submitted_at: new Date().toISOString(),
-        user_agent: navigator.userAgent,
-        ip_address: null // This would be captured on backend
-      }
-    };
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/applications/teacher-housing`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-API-Version': '1.0'
-          // Add authentication headers if needed:
-          // 'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const result: ApiResponse = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Submission failed');
-      }
-
-      return result;
-    } catch (error) {
-      // Handle network errors
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        return {
-          success: false,
-          message: 'Network error. Please check your connection and try again.',
-        };
-      }
-
-      return {
-        success: false,
-        message: error instanceof Error ? error.message : 'An unexpected error occurred',
-      };
-    }
-  };
-
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  // const handleSubmit = async () => {
-  //   if (!validateForm()) {
-  //     toast({
-  //       title: "Validation Error",
-  //       description: "Please correct the errors and try again.",
-  //       variant: 'destructive'
-  //     });
-  //     return;
-  //   }
-  //
-  //   setIsSubmitting(true);
-  //   setSubmitStatus('idle');
-  //
-  //   try {
-  //     const response = await submitToBackend(formData);
-  //     setApiResponse(response);
-  //
-  //     if (response.success) {
-  //       setSubmitStatus('success');
-  //       toast({
-  //         title: "Application Submitted Successfully!",
-  //         description: `Your application has been received. Reference: ${response.data?.referenceNumber}`,
-  //       });
-  //     } else {
-  //       setSubmitStatus('error');
-  //       toast({
-  //         title: "Submission Failed",
-  //         description: response.message,
-  //         variant: "destructive"
-  //       });
-  //     }
-  //   } catch (error) {
-  //     setSubmitStatus('error');
-  //     toast({
-  //       title: "Submission Error",
-  //       description: "An unexpected error occurred. Please try again.",
-  //       variant: "destructive"
-  //     });
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
   const resetForm = () => {
     setFormData({
-      state: '',
-      propertyType: '',
-      paymentMode: '',
-      firstName: '',
-      lastName: '',
+      property_state: '',
+      property_type: '',
+      payment_mode: '',
+      firstname: '',
+      lastname: '',
       email: '',
-      dateOfBirth: '',
+      date_of_birth: '',
       phone: '',
-      stateOfOrigin: '',
+      state_of_origin: '',
       bvn: '',
       nin: '',
-      monthlyIncome: '',
-      employmentStatus: '',
-      employerName: '',
-      employerAddress: '',
-      bankName: '',
-      accountNumber: '',
-      nextOfKinName: '',
-      nextOfKinRelation: '',
-      nextOfKinPhone: '',
-      nextOfKinAddress: ''
+      monthly_income: '',
+      employment_status: '',
+      employer_name: '',
+      employer_address: '',
+      bank_name: '',
+      account_number: '',
+      next_of_kin: '',
+      relationship_with_next_of_kin: '',
+      next_of_kin_phone: '',
+      next_of_kin_address: ''
     });
     setErrors({});
     setTermsAccepted(false);
@@ -388,17 +248,31 @@ const ApplicationFormPage = () => {
     setApiResponse(null);
   };
 
-  const onSubmit = (data: FormData) => {
-    console.log('Comprehensive form submitted:', data);
-    setIsSubmitted(true);
-    toast({
-      title: "Application Submitted Successfully!",
-      description: "Your comprehensive application has been received. Our team will review and contact you within 5-7 business days.",
-    });
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+
+    try {
+      await updateProfile(data);
+      setIsSubmitted(true);
+
+      setIsLoading(false);
+
+      toast({
+        title: "Application Submitted Successfully!",
+        description: "Your application has been received. Our team will review and contact you within 5-7 business days.",
+      });
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Registration Failed",
+        description: error instanceof Error ? error.message : "An error occurred during submission. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   // Success state
-  if (submitStatus === 'success' && apiResponse?.success) {
+  if (submitStatus === 'success' || authState.user?.bvn) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -410,17 +284,16 @@ const ApplicationFormPage = () => {
                   <CheckCircle className="h-12 w-12 text-green-500" />
                 </div>
                 <CardTitle className="text-green-600">Application Submitted!</CardTitle>
-                <CardDescription>Your comprehensive application has been received</CardDescription>
+                <CardDescription>Your application has been received</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Thank you for completing your detailed application. Our team will review your information and contact you within 5-7 business days with next steps.
+                  Thank you for completing your application. Our team will review your information and contact you within 5-7 business days with next steps.
                 </p>
                 <div className="space-y-2 text-left bg-gray-50 p-4 rounded-lg">
-                  <p><strong>Application ID:</strong> {apiResponse.data?.applicationId || 'NHF-' + Date.now().toString().slice(-6)}</p>
-                  <p><strong>Reference Number:</strong> {apiResponse.data?.referenceNumber || 'REF-' + Date.now().toString().slice(-8)}</p>
-                  <p><strong>Status:</strong> {apiResponse.data?.status || 'Under Review'}</p>
-                  <p><strong>Submitted:</strong> {new Date().toLocaleString()}</p>
+                  <p><strong>Application ID:</strong> {authState.user?.id}</p>
+                  <p><strong>Status:</strong>Under Review</p>
+                  <p><strong>Submitted:</strong> {new Date(authState?.user?.updated_at).toLocaleString()}</p>
                 </div>
                 <div className="flex gap-4 mt-6">
                   <Button
@@ -475,7 +348,7 @@ const ApplicationFormPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>State</Label>
-                      <Select onValueChange={(value) => setValue('state', value)}>
+                      <Select onValueChange={(value) => setValue('project_state', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select State" />
                         </SelectTrigger>
@@ -490,7 +363,7 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label>Property Type</Label>
-                      <Select onValueChange={(value) => setValue('propertyType', value)}>
+                      <Select onValueChange={(value) => setValue('property_type', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select Property Type" />
                         </SelectTrigger>
@@ -509,7 +382,7 @@ const ApplicationFormPage = () => {
                 {/* Payment Mode */}
                 <div>
                   <h3 className="text-lg font-semibold mb-4">Payment Mode</h3>
-                  <RadioGroup onValueChange={(value) => setValue('paymentMode', value)}>
+                  <RadioGroup onValueChange={(value) => setValue('payment_mode', value)}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="outright" id="outright" />
                       <Label htmlFor="outright">Outright Payment</Label>
@@ -537,11 +410,11 @@ const ApplicationFormPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" {...register('firstName', { required: true })} />
+                      <Input id="firstName" {...register('firstname', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" {...register('lastName', { required: true })} />
+                      <Input id="lastName" {...register('lastname', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email</Label>
@@ -549,7 +422,7 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                      <Input id="dateOfBirth" type="date" {...register('dateOfBirth', { required: true })} />
+                      <Input id="dateOfBirth" type="date" {...register('date_of_birth', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
@@ -557,7 +430,7 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label>State of Origin</Label>
-                      <Select onValueChange={(value) => setValue('stateOfOrigin', value)}>
+                      <Select onValueChange={(value) => setValue('state_of_origin', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select State of Origin" />
                         </SelectTrigger>
@@ -589,11 +462,11 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="monthlyIncome">Monthly Income (₦)</Label>
-                      <Input id="monthlyIncome" type="number" {...register('monthlyIncome', { required: true })} placeholder="Enter monthly income" />
+                      <Input id="monthlyIncome" type="number" {...register('monthly_income', { required: true })} placeholder="Enter monthly income" />
                     </div>
                     <div className="space-y-2">
                       <Label>Employment Status</Label>
-                      <Select onValueChange={(value) => setValue('employmentStatus', value)}>
+                      <Select onValueChange={(value) => setValue('employment_status', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select Employment Status" />
                         </SelectTrigger>
@@ -608,11 +481,11 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="employerName">Employer Name/Business Name</Label>
-                      <Input id="employerName" {...register('employerName', { required: true })} />
+                      <Input id="employerName" {...register('employer_name', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="employerAddress">Employer/Business Address</Label>
-                      <Input id="employerAddress" {...register('employerAddress', { required: true })} />
+                      <Input id="employerAddress" {...register('employer_address', { required: true })} />
                     </div>
                   </div>
                 </div>
@@ -625,11 +498,11 @@ const ApplicationFormPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="bankName">Bank Name</Label>
-                      <Input id="bankName" {...register('bankName', { required: true })} />
+                      <Input id="bankName" {...register('bank_name', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="accountNumber">Account Number</Label>
-                      <Input id="accountNumber" {...register('accountNumber', { required: true })} />
+                      <Input id="accountNumber" {...register('account_number', { required: true })} />
                     </div>
                   </div>
                 </div>
@@ -642,19 +515,19 @@ const ApplicationFormPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="nextOfKinName">Full Name</Label>
-                      <Input id="nextOfKinName" {...register('nextOfKinName', { required: true })} />
+                      <Input id="nextOfKinName" {...register('next_of_kin', { required: true })} />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="nextOfKinRelation">Relationship</Label>
-                      <Input id="nextOfKinRelation" {...register('nextOfKinRelation', { required: true })} placeholder="e.g., Spouse, Father, Mother, etc." />
+                      <Input id="nextOfKinRelation" {...register('relation_with_next_of_kin', { required: true })} placeholder="e.g., Spouse, Father, Mother, etc." />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="nextOfKinPhone">Phone Number</Label>
-                      <Input id="nextOfKinPhone" {...register('nextOfKinPhone', { required: true })} />
+                      <Input id="nextOfKinPhone" {...register('next_of_kin_phone', { required: true })} />
                     </div>
                     <div className="space-y-2 md:col-span-2">
                       <Label htmlFor="nextOfKinAddress">Address</Label>
-                      <Input id="nextOfKinAddress" {...register('nextOfKinAddress', { required: true })} />
+                      <Input id="nextOfKinAddress" {...register('next_of_kin_address', { required: true })} />
                     </div>
                   </div>
                 </div>
@@ -677,8 +550,8 @@ const ApplicationFormPage = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full" variant="government" size="lg">
-                  Submit Comprehensive Application
+                <Button type="submit" disabled={isLoading} className="w-full" variant="government" size="lg">
+                  {isLoading ? 'Submitting...' : 'Submit Application'}
                 </Button>
               </form>
             </CardContent>

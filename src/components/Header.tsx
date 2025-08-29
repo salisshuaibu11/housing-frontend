@@ -4,10 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from "@/hooks/useAuth.js.ts";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { authState } = useAuth()
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -15,6 +17,8 @@ export const Header = () => {
     { label: 'Calculator', href: '/calculator' },
     { label: 'Application Form', href: '/application-form' },
   ];
+
+  const showApplicationForm = authState.isAuthenticated && authState.sessionToken;
 
   return (
     <header className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-sm">
@@ -42,15 +46,32 @@ export const Header = () => {
           {/* Desktop Navigation */}
           {!isMobile && (
             <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
+              <Link
+                to="/"
+                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                to="/properties"
+                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Properties
+              </Link>
+              <Link
+                to="/calculator"
+                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Calculator
+              </Link>
+              {showApplicationForm && (
                 <Link
-                  key={item.label}
-                  to={item.href}
+                  to="/application-form"
                   className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
                 >
-                  {item.label}
+                  Application Form
                 </Link>
-              ))}
+              )}
             </nav>
           )}
 

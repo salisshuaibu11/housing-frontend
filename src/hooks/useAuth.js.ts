@@ -5,9 +5,7 @@ interface User {
   firstname: string;
   lastname: string;
   email: string;
-  phone: string;
-  state_of_origin: string;
-  property_type: string;
+  password: string;
 }
 
 interface AuthState {
@@ -101,14 +99,15 @@ export const useAuth = () => {
 
       const userData = await response.json();
 
-      console.log(userData);
+      if (userData) {
+        setAuthState((prev) => ({ ...prev, isAuthenticated: true, user: userData }));
+      }
 
       // Update stored user data with fresh data from API
       //saveUserData(userData, sessionToken);
 
       return userData;
     } catch (error) {
-      console.error('Profile fetch error:', error);
       setAuthState(prev => ({
         ...prev,
         isLoading: false,
@@ -128,11 +127,11 @@ export const useAuth = () => {
         try {
           // Try to fetch fresh profile data from API
           await fetchUserProfile(sessionToken);
+          setAuthState((prev) => ({ ...prev, sessionToken }));
         } catch (error) {
           // If API call fails, try to use saved data
           try {
             const user = JSON.parse(savedUser);
-            console.warn('Using cached user data, API call failed:', error);
             setAuthState({
               isAuthenticated: true,
               user,
@@ -141,7 +140,6 @@ export const useAuth = () => {
               error: null
             });
           } catch (parseError) {
-            console.error('Error parsing saved user data:', parseError);
             clearUserData();
           }
         }
@@ -157,8 +155,6 @@ export const useAuth = () => {
   const login = useCallback(async (credentials: LoginCredentials) => {
     try {
       setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
-
-      console.log(credentials)
 
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -178,6 +174,7 @@ export const useAuth = () => {
 
       // Save user data
       saveUserData(result.user, sessionToken);
+      setAuthState(prev => ({ ...prev, isAuthenticated: false, isLoading: false, error: null }));
 
       return result;
     } catch (error) {
@@ -241,9 +238,9 @@ export const useAuth = () => {
     try {
       setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
 
-      if (!authState.sessionToken) {
-        throw new Error('No active session');
-      }
+      // if (!authState.sessionToken) {
+      //   throw new Error('No active session');
+      // }
 
       const response = await fetch(`${API_BASE_URL}/users/profile`, {
         method: 'PUT',
