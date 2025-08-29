@@ -27,7 +27,7 @@ const nigerianStates = [
 
 interface FormData {
   // Location preferences
-  project_state: string;
+  property_state: string;
   property_type: string;
   
   // Payment
@@ -55,7 +55,7 @@ interface FormData {
   
   // Next of Kin
   next_of_kin: string;
-  relation_with_next_of_kin: string;
+  relationship_with_next_of_kin: string;
   next_of_kin_phone: string;
   next_of_kin_address: string;
 }
@@ -291,18 +291,14 @@ const ApplicationFormPage = () => {
                   Thank you for completing your application. Our team will review your information and contact you within 5-7 business days with next steps.
                 </p>
                 <div className="space-y-2 text-left bg-gray-50 p-4 rounded-lg">
-                  <p><strong>Application ID:</strong> {authState.user?.id}</p>
+                  <p><strong>Name:</strong> {authState.user?.firstname} {authState.user?.lastname}</p>
+                  <p><strong>Email:</strong> {authState.user?.email}</p>
+                  <p><strong>Property Type:</strong> {authState.user?.property_type}</p>
+                  <p><strong>Mode of Payment:</strong> {authState.user?.payment_mode}</p>
                   <p><strong>Status:</strong>Under Review</p>
                   <p><strong>Submitted:</strong> {new Date(authState?.user?.updated_at).toLocaleString()}</p>
                 </div>
                 <div className="flex gap-4 mt-6">
-                  <Button
-                    onClick={resetForm}
-                    variant="outline"
-                    className="flex-1"
-                  >
-                    Submit Another Application
-                  </Button>
                   <Button
                     onClick={() => window.print()}
                     variant="default"
@@ -348,7 +344,7 @@ const ApplicationFormPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>State</Label>
-                      <Select onValueChange={(value) => setValue('project_state', value)}>
+                      <Select onValueChange={(value) => setValue('property_state', value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select State" />
                         </SelectTrigger>
@@ -519,7 +515,7 @@ const ApplicationFormPage = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="nextOfKinRelation">Relationship</Label>
-                      <Input id="nextOfKinRelation" {...register('relation_with_next_of_kin', { required: true })} placeholder="e.g., Spouse, Father, Mother, etc." />
+                      <Input id="nextOfKinRelation" {...register('relationship_with_next_of_kin', { required: true })} placeholder="e.g., Spouse, Father, Mother, etc." />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="nextOfKinPhone">Phone Number</Label>

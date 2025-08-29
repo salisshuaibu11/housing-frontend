@@ -192,7 +192,7 @@ const SignUpPage = () => {
                     variant="government"
                     className="w-full"
                   >
-                    <Link to="/register">Submit Application</Link>
+                    <Link to="/application-form">Submit Application</Link>
                   </Button>
                 </div>
               </CardContent>

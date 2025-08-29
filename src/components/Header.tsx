@@ -9,7 +9,7 @@ import { useAuth } from "@/hooks/useAuth.js.ts";
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { authState } = useAuth()
+  const { authState, logout } = useAuth()
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -88,15 +88,19 @@ export const Header = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            {!isMobile && (
+            {!isMobile && !authState.isAuthenticated ? (
               <>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="justify-start">
                   <Link to="/login">Log In</Link>
                 </Button>
                 <Button variant="government" size="sm" asChild>
                   <Link to="/sign-up">Sign Up</Link>
                 </Button>
               </>
+            ) : (
+              <Button onClick={logout} variant="government" size="sm" className="justify-start">
+                Logout
+              </Button>
             )}
 
             {/* Mobile Menu Button */}
@@ -135,12 +139,20 @@ export const Header = () => {
               ))}
             </nav>
             <div className="flex flex-col space-y-2 pt-4 border-t border-border">
-              <Button variant="ghost" size="sm" className="justify-start">
-                <Link to="/login">Log In</Link>
-              </Button>
-              <Button variant="government" size="sm" asChild>
-                <Link to="/sign-up">Sign Up</Link>
-              </Button>
+              {!authState.isAuthenticated ? (
+                  <>
+                    <Button variant="ghost" size="sm" className="justify-start">
+                      <Link to="/login">Log In</Link>
+                    </Button>
+                    <Button variant="government" size="sm" asChild>
+                      <Link to="/sign-up">Sign Up</Link>
+                    </Button>
+                  </>
+              ) : (
+                <Button onClick={logout} variant="ghost" size="sm" className="justify-start">
+                  Logout
+                </Button>
+              )}
             </div>
           </div>
         )}
