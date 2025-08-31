@@ -14,7 +14,7 @@ export const Header = () => {
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Properties', href: '/properties' },
-    { label: 'Calculator', href: '/calculator' },
+    // { label: 'Calculator', href: '/calculator' },
     { label: 'Application Form', href: '/application-form' },
   ];
 
@@ -24,7 +24,7 @@ export const Header = () => {
     <header className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-sm">
       {/* Announcement Banner */}
       <div className="bg-[hsl(var(--government-green))] text-white py-2 px-4 text-center text-sm font-medium">
-        Get NHF mortgage at <strong>6%</strong> and FMBN Non-interest Rent-to-Own. Secure a unit today in Karsana, FCT Abuja by making a minimum downpayment of 20%. Unit allocation is on a first come, first serve basis.{' '}
+        Get NHF mortgage at <strong>6%</strong> and FMBN Non-interest Rent-to-Own. Secure a unit today in FCT Abuja, by making a minimum downpayment of 20%. Unit allocation is on a first come, first serve basis.{' '}
         <Button 
           variant="link" 
           className="text-white underline p-0 h-auto font-medium"
@@ -58,12 +58,12 @@ export const Header = () => {
               >
                 Properties
               </Link>
-              <Link
-                to="/calculator"
-                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
-              >
-                Calculator
-              </Link>
+              {/*<Link*/}
+              {/*  to="/calculator"*/}
+              {/*  className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"*/}
+              {/*>*/}
+              {/*  Calculator*/}
+              {/*</Link>*/}
               {showApplicationForm && (
                 <Link
                   to="/application-form"
@@ -127,16 +127,36 @@ export const Header = () => {
               />
             </div>
             <nav className="space-y-2">
-              {navItems.map((item) => (
+              <Link
+                to="/"
+                className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Home
+              </Link>
+              <Link
+                to="/properties"
+                className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Properties
+              </Link>
+              {showApplicationForm && (
                 <Link
-                  key={item.label}
-                  to={item.href}
+                  to="/application-form"
                   className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
                 >
-                  {item.label}
+                  Application Form
                 </Link>
-              ))}
+              )}
+              {/*{navItems.map((item) => (*/}
+              {/*  <Link*/}
+              {/*    key={item.label}*/}
+              {/*    to={item.href}*/}
+              {/*    className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"*/}
+              {/*    onClick={() => setIsMenuOpen(false)}*/}
+              {/*  >*/}
+              {/*    {item.label}*/}
+              {/*  </Link>*/}
+              {/*))}*/}
             </nav>
             <div className="flex flex-col space-y-2 pt-4 border-t border-border">
               {!authState.isAuthenticated ? (

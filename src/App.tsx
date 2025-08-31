@@ -10,6 +10,7 @@ import CalculatorPage from "./pages/CalculatorPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage.tsx";
 import ApplicationFormPage from "./pages/ApplicationFormPage";
+import PrivacyPolicy from "@/pages/PrivacyPolicy.tsx";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/application-form" element={<ApplicationFormPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

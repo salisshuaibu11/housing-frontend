@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import {useState} from "react";
 
 export const Footer = () => {
+  const [showPrivacyNotice, setShowPrivacyNotice] = useState<boolean>(true);
   const footerLinks = [
     { label: 'Properties', href: '/properties' },
-    { label: 'Calculator', href: '/calculator' },
+    // { label: 'Calculator', href: '/calculator' },
     { label: 'Apply Now', href: '/sign-up' },
     { label: 'Application Form', href: '/application-form' },
   ];
@@ -42,35 +44,38 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Federal Ministry</h3>
+            <h3 className="font-semibold text-lg">Federal Ministry Of</h3>
             <div className="text-white/80 space-y-2">
-              <p>Housing & Urban Development</p>
+              <p>Education</p>
               <p>Federal Republic of Nigeria</p>
             </div>
           </div>
         </div>
 
         {/* Privacy Notice */}
-        <div className="border-t border-white/20 mt-8 pt-8">
-          <div className="bg-white/10 rounded-lg p-4 space-y-4">
-            <h4 className="font-semibold">Privacy Notice</h4>
-            <p className="text-sm text-white/80">
-              We take your policy seriously and only process your personal information to ensure 
-              you get the best experience on our website. Your consent to the processing data while 
-              engaging with our website is in accordance with the NDP Act. Read our{' '}
-              <a href="/privacy-policy" className="underline hover:text-white">Privacy Policy</a>{' '}
-              and <a href="/cookie-policy" className="underline hover:text-white">Cookie Policy</a>.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="secondary" size="sm">
-                Accept All
-              </Button>
-              <Button variant="outline" size="sm" className="border-white text-white hover:bg-white hover:text-[hsl(var(--government-green))]">
-                Reject All
-              </Button>
+        {showPrivacyNotice && (
+          <div className="border-t border-white/20 mt-8 pt-8">
+            <div className="bg-white/10 rounded-lg p-4 space-y-4">
+              <h4 className="font-semibold">Privacy Notice</h4>
+              <p className="text-sm text-white/80">
+                We take your policy seriously and only process your personal information to ensure
+                you get the best experience on our website. Your consent to the processing data while
+                engaging with our website is in accordance with the NDP Act. Read our{' '}
+                <a href="/privacy-policy" className="underline hover:text-white">Privacy Policy</a>{' '}
+                and <a href="/cookie-policy" className="underline hover:text-white">Cookie Policy</a>.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button onClick={() => setShowPrivacyNotice(false)} variant="secondary" size="sm">
+                  Accept All
+                </Button>
+                <Button onClick={() => setShowPrivacyNotice(false)} variant="outline" size="sm"
+                        className="border-white text-[hsl(var(--government-green))] hover:bg-white hover:text-[hsl(var(--government-green))]">
+                  Reject All
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="text-center mt-8 pt-8 border-t border-white/20">
           <p className="text-white/60 text-sm">
