@@ -39,7 +39,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="text-xl md:text-2xl font-bold text-[hsl(var(--government-green))]">
-              Teachers <span className="text-foreground">Housing</span>
+              Staff <span className="text-foreground">Housing</span>
             </Link>
           </div>
 
