@@ -211,7 +211,7 @@ const SignUpPage = () => {
         <div className="max-w-2xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle>Teacher Registration</CardTitle>
+              <CardTitle>Staff/Teacher Registration</CardTitle>
               <CardDescription>
                 Please provide your basic information to register your interest in the Affordable Housing Scheme for Teachers
               </CardDescription>

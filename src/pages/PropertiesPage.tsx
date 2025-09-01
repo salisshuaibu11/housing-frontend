@@ -196,87 +196,87 @@ const PropertiesPage = () => {
         </div>
 
         {/* Properties Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProperties.map((property) => (
-            <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="relative">
-                <img 
-                  src={property.image} 
-                  alt={property.title}
-                  className="w-full h-48 object-cover"
-                />
-                <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="absolute top-2 right-2 bg-white/80 hover:bg-white"
-                >
-                  <Heart className="w-4 h-4" />
-                </Button>
-                <Badge 
-                  className={`absolute top-2 left-2 ${
-                    property.status === 'Available' 
-                      ? 'bg-[hsl(var(--government-green))] text-white' 
-                      : 'bg-orange-500 text-white'
-                  }`}
-                >
-                  {property.status}
-                </Badge>
-              </div>
-              
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg mb-2">{property.title}</h3>
-                <div className="flex items-center text-muted-foreground mb-3">
-                  <MapPin className="w-4 h-4 mr-1" />
-                  <span className="text-sm">{property.location}</span>
-                </div>
-                
-                <div className="flex justify-between items-center mb-3">
-                  <div className="flex space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                      <Bed className="w-4 h-4 mr-1" />
-                      {property.bedrooms}
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="w-4 h-4 mr-1" />
-                      {property.bathrooms}
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="w-4 h-4 mr-1" />
-                      {property.area}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="text-lg font-bold text-[hsl(var(--government-green))]">
-                    {property.price}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Monthly: {property.monthlyPayment} (NHF 6% rate)
-                  </div>
-                </div>
-                
-                <div className="mt-4 space-y-2">
-                  <Button className="w-full" variant="government">
-                    View Details
-                  </Button>
-                  <Button className="w-full" variant="outline">
-                    Schedule Visit
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">*/}
+        {/*  {filteredProperties.map((property) => (*/}
+        {/*    <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow">*/}
+        {/*      <div className="relative">*/}
+        {/*        <img */}
+        {/*          src={property.image} */}
+        {/*          alt={property.title}*/}
+        {/*          className="w-full h-48 object-cover"*/}
+        {/*        />*/}
+        {/*        <Button */}
+        {/*          size="icon" */}
+        {/*          variant="ghost" */}
+        {/*          className="absolute top-2 right-2 bg-white/80 hover:bg-white"*/}
+        {/*        >*/}
+        {/*          <Heart className="w-4 h-4" />*/}
+        {/*        </Button>*/}
+        {/*        <Badge */}
+        {/*          className={`absolute top-2 left-2 ${*/}
+        {/*            property.status === 'Available' */}
+        {/*              ? 'bg-[hsl(var(--government-green))] text-white' */}
+        {/*              : 'bg-orange-500 text-white'*/}
+        {/*          }`}*/}
+        {/*        >*/}
+        {/*          {property.status}*/}
+        {/*        </Badge>*/}
+        {/*      </div>*/}
+        {/*      */}
+        {/*      <CardContent className="p-4">*/}
+        {/*        <h3 className="font-semibold text-lg mb-2">{property.title}</h3>*/}
+        {/*        <div className="flex items-center text-muted-foreground mb-3">*/}
+        {/*          <MapPin className="w-4 h-4 mr-1" />*/}
+        {/*          <span className="text-sm">{property.location}</span>*/}
+        {/*        </div>*/}
+        {/*        */}
+        {/*        <div className="flex justify-between items-center mb-3">*/}
+        {/*          <div className="flex space-x-4 text-sm text-muted-foreground">*/}
+        {/*            <div className="flex items-center">*/}
+        {/*              <Bed className="w-4 h-4 mr-1" />*/}
+        {/*              {property.bedrooms}*/}
+        {/*            </div>*/}
+        {/*            <div className="flex items-center">*/}
+        {/*              <Bath className="w-4 h-4 mr-1" />*/}
+        {/*              {property.bathrooms}*/}
+        {/*            </div>*/}
+        {/*            <div className="flex items-center">*/}
+        {/*              <Square className="w-4 h-4 mr-1" />*/}
+        {/*              {property.area}*/}
+        {/*            </div>*/}
+        {/*          </div>*/}
+        {/*        </div>*/}
+        {/*        */}
+        {/*        <div className="space-y-2">*/}
+        {/*          <div className="text-lg font-bold text-[hsl(var(--government-green))]">*/}
+        {/*            {property.price}*/}
+        {/*          </div>*/}
+        {/*          <div className="text-sm text-muted-foreground">*/}
+        {/*            Monthly: {property.monthlyPayment} (NHF 6% rate)*/}
+        {/*          </div>*/}
+        {/*        </div>*/}
+        {/*        */}
+        {/*        <div className="mt-4 space-y-2">*/}
+        {/*          <Button className="w-full" variant="government">*/}
+        {/*            View Details*/}
+        {/*          </Button>*/}
+        {/*          <Button className="w-full" variant="outline">*/}
+        {/*            Schedule Visit*/}
+        {/*          </Button>*/}
+        {/*        </div>*/}
+        {/*      </CardContent>*/}
+        {/*    </Card>*/}
+        {/*  ))}*/}
+        {/*</div>*/}
 
-        {filteredProperties.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No properties match your current filters.</p>
-            <Button onClick={clearFilters} variant="government" className="mt-4">
-              View All Properties
-            </Button>
-          </div>
-        )}
+        {/*{filteredProperties.length === 0 && (*/}
+        {/*  <div className="text-center py-12">*/}
+        {/*    <p className="text-muted-foreground text-lg">No properties match your current filters.</p>*/}
+        {/*    <Button onClick={clearFilters} variant="government" className="mt-4">*/}
+        {/*      View All Properties*/}
+        {/*    </Button>*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </main>
       <Footer />
     </div>

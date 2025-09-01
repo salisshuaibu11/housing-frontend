@@ -22,7 +22,7 @@ export const Footer = () => {
             </div>
             <p className="text-white/80 max-w-md">
               Making the dream of home ownership a reality for educators through 
-              the Affordable Housing Scheme for Teachers and innovative financing solutions.
+              the Affordable Housing Scheme for all Staff and Teachers of the Ministry Of Education and innovative financing solutions.
             </p>
           </div>
 

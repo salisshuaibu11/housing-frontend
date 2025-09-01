@@ -325,7 +325,7 @@ const ApplicationFormPage = () => {
             <CardHeader>
               <CardTitle>Teacher Housing Application</CardTitle>
               <CardDescription>
-                Complete this detailed form to proceed with your application for the Affordable Housing Scheme for Teachers
+                Complete this detailed form to proceed with your application for the Affordable Housing Scheme for all Staff and Teachers of the Ministry Of Education
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -535,7 +535,7 @@ const ApplicationFormPage = () => {
                   <div className="flex items-center space-x-2">
                     <Checkbox id="terms" />
                     <Label htmlFor="terms" className="text-sm">
-                      I agree to the terms and conditions of the Affordable Housing Scheme for Teachers and authorize verification of the information provided above.
+                      I agree to the terms and conditions of the Affordable Housing Scheme for all Staff and Teachers of the Ministry Of Education and authorize verification of the information provided above.
                     </Label>
                   </div>
                   <div className="flex items-center space-x-2">

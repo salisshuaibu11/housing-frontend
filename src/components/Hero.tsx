@@ -51,12 +51,12 @@ export const Hero = () => {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
             Affordable Housing Scheme
             <br />
-            <span className="text-[hsl(var(--government-green-light))]">for Teachers</span>
+            <span className="text-[hsl(var(--government-green-light))]">for Teachers and Staff</span>
           </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Welcome to the Affordable Housing Scheme for Teachers! Through our innovative home ownership solutions with NHF Loans at{' '}
+            Welcome to the Affordable Housing Scheme for all Staff and Teachers of the Ministry Of Education! Through our innovative home ownership solutions with NHF Loans at{' '}
             <strong className="text-[hsl(var(--government-green-light))]">6% interest rate</strong>{' '}
             and FMBN Non-Interest Rent-to-Own Scheme, we aim to make home ownership accessible for educators. 
             Join us in supporting those who shape our future.
