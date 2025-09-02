@@ -19,7 +19,17 @@ const nigerianStates = [
   'Plateau State', 'Rivers State', 'Sokoto State', 'Taraba State', 'Yobe State', 'Zamfara State'
 ];
 
-const propertyTypes = ['2 Bedroom', '3 Bedroom', '4 Bedroom', 'Duplex', 'Bungalow'];
+const propertyTypes = [
+  '2 Bedroom (Bungalow)',
+  '3 Bedroom (Bungalow)',
+  '2 Bedroom (Flat)',
+  '3 Bedroom (Flat)',
+  '3 Bedroom (Terrace + BQ)',
+  '4 Bedroom (Terrace + BQ)',
+  '3 Bedroom (Semi-Detached Duplex)',
+  '4 Bedroom (Semi-Detached Duplex)',
+  '4 Bedroom (Fully Detached Duplex)',
+];
 
 // Sample property data
 const properties = [
@@ -152,7 +162,7 @@ const PropertiesPage = () => {
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    {propertyTypes.map((type) => (
+                    {propertyTypes.map((type, title) => (
                       <SelectItem key={type} value={type}>
                         {type}
                       </SelectItem>

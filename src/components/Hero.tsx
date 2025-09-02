@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search } from 'lucide-react';
 import heroImage from '@/assets/hero-housing.jpg';
-import ministryLogo from '@/assets/ministry-logo.png';
+import homeLogo from '@/assets/logo.webp';
 
 export const Hero = () => {
   const propertyTypes = [
@@ -40,9 +40,9 @@ export const Hero = () => {
           <div className="mb-8 flex justify-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-full p-6 border border-white/20">
               <img 
-                src={ministryLogo} 
+                src={homeLogo}
                 alt="Federal Ministry of Housing & Urban Development"
-                className="w-20 h-20 mx-auto"
+                className="w-24 h-24 mx-auto rounded-full"
               />
             </div>
           </div>
@@ -103,13 +103,13 @@ export const Hero = () => {
               <Link to="/sign-up">Get Started - Apply Now</Link>
             </Button>
             
-            <Button 
-              variant="government-outline" 
-              size="lg"
-              className="border-white text-white hover:bg-white hover:text-[hsl(var(--government-green))] px-8 py-3"
-            >
-              Watch a short video on How to Secure Your Home in 3 Simple Steps
-            </Button>
+            {/*<Button */}
+            {/*  variant="government-outline" */}
+            {/*  size="lg"*/}
+            {/*  className="border-white text-white hover:bg-white hover:text-[hsl(var(--government-green))] px-8 py-3"*/}
+            {/*>*/}
+            {/*  Watch a short video on How to Secure Your Home in 3 Simple Steps*/}
+            {/*</Button>*/}
           </div>
         </div>
       </div>

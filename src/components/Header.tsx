@@ -24,7 +24,7 @@ export const Header = () => {
     <header className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-sm">
       {/* Announcement Banner */}
       <div className="bg-[hsl(var(--government-green))] text-white py-2 px-4 text-center text-sm font-medium">
-        Get NHF mortgage at <strong>6%</strong> and FMBN Non-interest Rent-to-Own. Secure a unit today in FCT Abuja, by making a minimum downpayment of 20%. Unit allocation is on a first come, first serve basis.{' '}
+        Get NHF mortgage at <strong>6%</strong> and FMBN Non-interest Rent-to-Own. Secure a unit today nation wide, by making a minimum downpayment of 20%. Unit allocation is on a first come, first serve basis.{' '}
         <Button 
           variant="link" 
           className="text-white underline p-0 h-auto font-medium"
@@ -39,7 +39,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link to="/" className="text-xl md:text-2xl font-bold text-[hsl(var(--government-green))]">
-              Staff <span className="text-foreground">Housing</span>
+              Affordable <span className="text-foreground">Housing</span>
             </Link>
           </div>
 

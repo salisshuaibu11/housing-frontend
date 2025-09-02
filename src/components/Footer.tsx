@@ -18,7 +18,7 @@ export const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-2 space-y-4">
             <div className="text-2xl font-bold">
-              Staff Housing
+              Affordable Housing
             </div>
             <p className="text-white/80 max-w-md">
               Making the dream of home ownership a reality for educators through 
