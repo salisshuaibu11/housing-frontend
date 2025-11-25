@@ -53,6 +53,12 @@ export const Header = () => {
                 Home
               </Link>
               <Link
+                to="#partners"
+                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Partners
+              </Link>
+              <Link
                 to="/properties"
                 className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
               >
@@ -132,6 +138,12 @@ export const Header = () => {
                 className="block py-2 text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
               >
                 Home
+              </Link>
+              <Link
+                to="#partners"
+                className="text-foreground hover:text-[hsl(var(--government-green))] font-medium transition-colors"
+              >
+                Partners
               </Link>
               <Link
                 to="/properties"

@@ -7,7 +7,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Bed, Bath, Square, Heart } from 'lucide-react';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+
+import propertyOne from "../assets/properties/1.jpeg";
+import propertyTwo from "../assets/properties/2.jpeg";
+import propertyThree from "../assets/properties/3.jpeg";
+import propertyFour from "../assets/properties/4.jpeg";
+import propertyFive from "../assets/properties/5.jpeg";
 
 const nigerianStates = [
   'Abia State', 'Adamawa State', 'Akwa Ibom State', 'Anambra State', 'Bauchi State', 
@@ -45,7 +51,7 @@ const properties = [
     area: '120 sqm',
     type: '3 Bedroom',
     status: 'Available',
-    image: '/placeholder.svg'
+    image: propertyOne
   },
   {
     id: 2,
@@ -59,36 +65,50 @@ const properties = [
     area: '85 sqm',
     type: '2 Bedroom',
     status: 'Available',
-    image: '/placeholder.svg'
+    image: propertyTwo
   },
   {
     id: 3,
-    title: '4 Bedroom Duplex',
-    location: 'Gwarinpa, FCT',
+    title: '2 Bedroom Apartment',
+    location: 'Karsana, FCT',
     state: 'FCT',
-    price: '₦45,000,000',
-    monthlyPayment: '₦225,000',
-    bedrooms: 4,
-    bathrooms: 3,
-    area: '200 sqm',
-    type: '4 Bedroom',
-    status: 'Coming Soon',
-    image: '/placeholder.svg'
+    price: '₦18,000,000',
+    monthlyPayment: '₦90,000',
+    bedrooms: 2,
+    bathrooms: 2,
+    area: '85 sqm',
+    type: '2 Bedroom',
+    status: 'Available',
+    image: propertyThree
   },
   {
     id: 4,
-    title: '3 Bedroom Bungalow',
-    location: 'Wuye, FCT',
+    title: '2 Bedroom Apartment',
+    location: 'Karsana, FCT',
     state: 'FCT',
-    price: '₦32,000,000',
-    monthlyPayment: '₦160,000',
-    bedrooms: 3,
+    price: '₦18,000,000',
+    monthlyPayment: '₦90,000',
+    bedrooms: 2,
     bathrooms: 2,
-    area: '150 sqm',
-    type: '3 Bedroom',
+    area: '85 sqm',
+    type: '2 Bedroom',
     status: 'Available',
-    image: '/placeholder.svg'
-  }
+    image: propertyFour
+  },
+  {
+    id: 5,
+    title: '2 Bedroom Apartment',
+    location: 'Karsana, FCT',
+    state: 'FCT',
+    price: '₦18,000,000',
+    monthlyPayment: '₦90,000',
+    bedrooms: 2,
+    bathrooms: 2,
+    area: '85 sqm',
+    type: '2 Bedroom',
+    status: 'Available',
+    image: propertyFive
+  },
 ];
 
 const PropertiesPage = () => {
@@ -98,6 +118,7 @@ const PropertiesPage = () => {
     propertyType: '',
     priceRange: ''
   });
+  const [showProperties, setShowProperties] = useState(false);
 
   const handleFilterChange = (key: string, value: string) => {
     const newFilters = { ...filters, [key]: value };
@@ -120,6 +141,15 @@ const PropertiesPage = () => {
     setFilters({ state: '', propertyType: '', priceRange: '' });
     setFilteredProperties(properties);
   };
+
+  useEffect(() => {
+    if (filters.state.toLowerCase() === "kaduna state") {
+      setShowProperties(true);
+      console.log(properties)
+    } else {
+      setShowProperties(false);
+    }
+  }, [filters.state]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -199,11 +229,30 @@ const PropertiesPage = () => {
           </CardContent>
         </Card>
 
-        {/* Results Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Available Properties</h2>
-          <p className="text-muted-foreground">{filteredProperties.length} properties found</p>
-        </div>
+        {/* Properties Grid - Only show when Kaduna State is selected */}
+        {showProperties ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {properties.map((property) => (
+              <Card key={property.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div className="relative">
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">
+              {filters.state
+                ? "No properties available in the selected state. Please try Kaduna State."
+                : "Please select Kaduna State to view available properties."}
+            </p>
+          </div>
+        )}
 
         {/* Properties Grid */}
         {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">*/}
